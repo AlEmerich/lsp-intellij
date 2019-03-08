@@ -565,9 +565,27 @@ status. If VALUE is nil, remove the status from the display."
   (lsp-provide-marked-string-renderer client "kotlin" (lambda (s) (lsp-intellij--render-string s 'kotlin-mode)))
   (lsp-client-register-uri-handler client "jar" 'lsp-intellij--visit-jar-uri))
 
-(lsp-register-client lsp-intellij "intellij" #'lsp-intellij--get-root lsp-intellij-dummy-executable
-                       "127.0.0.1" lsp-intellij-server-port
-                       :initialize #'lsp-intellij--initialize-client)
+(let--assert-type lsp-intellij #'symbolp)
+(let* (client)
+  (setq client
+        (make-lsp--client
+         :language-id (lsp--assert-type "intellij" #'stringp)
+         :send-sync 'lsp--stdio-send-sync
+         :send-async 'lsp--stdio-send-async
+         :type '(lsp--assert-type #'lsp-intellij--get-root #'symbolp)
+         :new-connection (lsp--make-tcp-connection "intellij"
+                                                   lsp-intellij-dummy-executable
+                                                   "127.0.0.1" lsp-intellij-server-port)
+         :get-root (lsp--assert-type #'lsp-intellij--get-root #'functionp)
+         :ignore-regexps (lsp--verify-regexp-list (plist-get
+                                                   args
+                                                   :ignore-regexps))))
+  (puthash lsp-intellij client lsp--defined-clients))
+
+
+;; (lsp-define-tcp-client lsp-intellij "intellij" #'lsp-intellij--get-root lsp-intellij-dummy-executable
+;;                        "127.0.0.1" lsp-intellij-server-port
+;;                        :initialize #'lsp-intellij--initialize-client)
 
 (defun lsp-intellij--set-configuration ()
   "Set the lsp configuration from the current map of config options."
