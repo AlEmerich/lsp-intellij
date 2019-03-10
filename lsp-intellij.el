@@ -566,16 +566,17 @@ status. If VALUE is nil, remove the status from the display."
   (lsp-client-register-uri-handler client "jar" 'lsp-intellij--visit-jar-uri))
 
 (lsp-register-client (make-lsp--client
-                      :language-id (lsp--assert-type"intellij"
+                      :language-id "intellij"
                       :send-sync 'lsp--stdio-send-sync
                       :send-async 'lsp--stdio-send-async
                       :type '(lsp--assert-type #'lsp-intellij--get-root #'symbolp)
-                      :new-connection (lsp-stdio-connection "intellij"
+                      :new-connection (lsp-stdio-connection '("intellij"
                                                             lsp-intellij-dummy-executable
-                                                            "127.0.0.1" lsp-intellij-server-port)
+                                                            "127.0.0.1" lsp-intellij-server-port))
                       :get-root (lsp--assert-type #'lsp-intellij--get-root #'functionp)
-                      )))
-;; (lsp-define-tcp-client lsp-intellij "intellij" #'lsp-intellij--get-root lsp-intellij-dummy-executable
+                      ))
+
+;; (lspp-define-tcp-client lsp-intellij "intellij" #'lsp-intellij--get-root lsp-intellij-dummy-executable
 ;;                        "127.0.0.1" lsp-intellij-server-port
 ;;                        :initialize #'lsp-intellij--initialize-clie
 
