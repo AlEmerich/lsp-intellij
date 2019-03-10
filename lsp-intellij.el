@@ -565,7 +565,7 @@ status. If VALUE is nil, remove the status from the display."
   (lsp-provide-marked-string-renderer client "kotlin" (lambda (s) (lsp-intellij--render-string s 'kotlin-mode)))
   (lsp-client-register-uri-handler client "jar" 'lsp-intellij--visit-jar-uri))
 
-(let--assert-type lsp-intellij #'symbolp)
+(let--assert-type 'lsp-intellij #'symbolp)
 (let* (client)
   (setq client
         (make-lsp--client
@@ -580,7 +580,7 @@ status. If VALUE is nil, remove the status from the display."
          :ignore-regexps (lsp--verify-regexp-list (plist-get
                                                    args
                                                    :ignore-regexps))))
-  (puthash lsp-intellij client lsp--defined-clients))
+  (puthash 'lsp-intellij client lsp--defined-clients))
 
 
 ;; (lsp-define-tcp-client lsp-intellij "intellij" #'lsp-intellij--get-root lsp-intellij-dummy-executable
