@@ -38,9 +38,6 @@
 
 (require 'lsp-mode)
 (require 'cl-lib)
-(require 'lsp-methods)
-(require 'lsp-io)
-(require 'network-stream)
 
 (defvar lsp-intellij-server-port 8080)
 (defvar lsp-intellij--config-options (make-hash-table))
@@ -569,7 +566,7 @@ status. If VALUE is nil, remove the status from the display."
   (lsp-client-register-uri-handler client "jar" 'lsp-intellij--visit-jar-uri))
 
 (lsp-register-client (make-lsp--client
-                      :language-id (lsp--assert-type "intellij" #'stringp)
+                      :language-id (lsp--assert-type 'lsp-intellij #'stringp)
                       :send-sync 'lsp--stdio-send-sync
                       :send-async 'lsp--stdio-send-async
                       :type '(lsp--assert-type #'lsp-intellij--get-root #'symbolp)
