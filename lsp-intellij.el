@@ -38,6 +38,9 @@
 
 (require 'lsp-mode)
 (require 'cl-lib)
+(require 'lsp-methods)
+(require 'lsp-io)
+(require 'network-stream)
 
 (defvar lsp-intellij-server-port 8080)
 (defvar lsp-intellij--config-options (make-hash-table))
