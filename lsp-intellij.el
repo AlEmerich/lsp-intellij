@@ -565,11 +565,12 @@ status. If VALUE is nil, remove the status from the display."
   (lsp-provide-marked-string-renderer client "kotlin" (lambda (s) (lsp-intellij--render-string s 'kotlin-mode)))
   (lsp-client-register-uri-handler client "jar" 'lsp-intellij--visit-jar-uri))
 
-(lsp-register-client ('lsp-intellij "intellij"
+(lsp-register-client 'lsp-intellij "intellij"
                      'lsp-intellij--get-root
                      lsp-intellij-dummy-executable "127.0.0.1"
                      lsp-intellij-server-port
-                     :initialize 'lsp-intellij--initialize-client))
+                     :initialize 'lsp-intellij--initialize-client)
+
 
 
 ;; (lspp-define-tcp-client lsp-intellij "intellij" #'lsp-intellij--get-root lsp-intellij-dummy-executable
