@@ -573,7 +573,8 @@ status. If VALUE is nil, remove the status from the display."
                       :new-connection (lsp-stdio-connection '("intellij"
                                                             lsp-intellij-dummy-executable
                                                             "127.0.0.1" lsp-intellij-server-port))
-                      :get-root (lsp--assert-type #'lsp-intellij--get-root #'functionp)
+
+                      :get-root #'lsp-intellij--get-root
                       ))
 
 ;; (lspp-define-tcp-client lsp-intellij "intellij" #'lsp-intellij--get-root lsp-intellij-dummy-executable
